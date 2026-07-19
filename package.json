@@ -11,6 +11,8 @@
     "react-router-dom": "^7.18.1",
     "recharts": "^3.9.2",
     "swiper": "^14.0.5",
-    "tailwindcss": "^4.3.2"
+    "tailwindcss": "^4.3.2",
+    "lighningcss": "^1.29.1"
+    
   }
 }
