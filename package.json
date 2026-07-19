@@ -12,7 +12,7 @@
     "recharts": "^3.9.2",
     "swiper": "^14.0.5",
     "tailwindcss": "^4.3.2",
-    "lighningcss": "^1.32.0"
+   "lightningcss": "^1.32.0"
     
   }
 }
