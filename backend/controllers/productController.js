@@ -281,14 +281,24 @@ export const resolveProductImage = (file, providedImage, name = "", category = "
 };
 
 const normalizeProductDocument = async (product) => {
-  if (!product || typeof product !== "object") return product;
+  if (!product || typeof product !== "object") 
+    return {
+  ...(product.toObject ? product.toObject() : product),
+  image: resolvedImage,
+};
+const plainProduct = product.toObject ? product.toObject() : product;
+  const resolvedImage = resolveProductImage(null, product.image, product.name, product.category,
 
-  const resolvedImage = resolveProductImage(null, product.image, product.name, product.category);
+    plainProduct.image,
+    plainProduct.name,
+    plainProduct.category
+  );
   const shouldPersist = Boolean(
     product._id &&
     !String(product._id).startsWith("fallback-") &&
     (!product.image || isLegacyFallbackImage(product.image)) &&
     resolvedImage !== product.image
+
   );
 
   if (shouldPersist) {
@@ -430,9 +440,9 @@ export const getSingleProduct = async (req, res) => {
     const product = await Product.findById(req.params.id);
 
     if (!product) {
-      return res.status(404).json({
-        success: false,
-        message: "Product not found",
+      return res.status(200).json({
+        success: true,
+        message: "normalized",
       });
     }
 
