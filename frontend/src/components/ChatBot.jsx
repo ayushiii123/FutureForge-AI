@@ -47,7 +47,7 @@ const ChatBot = () => {
     const token = localStorage.getItem("token");
 
     const res = await axios.post(
-      "http://localhost:5000/api/ai/chat",
+      "https://futureforge-ai-server.onrender.com",
       {
         message: text,
       },
@@ -169,7 +169,7 @@ const ChatBot = () => {
         className="border rounded-lg p-2 bg-white shadow"
       >
         <img
-          src={`http://localhost:5000/uploads/${item.image}`}
+          src={`https://futureforge-ai-server.onrender.com/uploads/${item.image}`}
           alt={item.name}
           className="w-full h-28 object-cover rounded"
         />
