@@ -8,12 +8,18 @@ import {
   getMyOrders,
   getAllOrders,
   updateOrderStatus,
+  cancelOrder,
 } from "../controllers/orderController.js";
 const router = express.Router();
 
 // User
 router.post("/", authMiddleware, createOrder);
 router.get("/my", authMiddleware, getMyOrders);
+router.put(
+  "/:id/cancel",
+  authMiddleware,
+  cancelOrder
+);
 
 // Admin
 router.get(

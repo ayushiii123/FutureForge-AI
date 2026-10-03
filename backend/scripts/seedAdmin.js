@@ -1,10 +1,11 @@
+import dns from "dns";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
 import bcrypt from "bcryptjs";
 import User from "../models/User.js";
 
 dotenv.config();
-
+dns.setServers(["1.1.1.1"]);
 const MONGO = process.env.MONGO_URI || "mongodb://localhost:27017/techrevive";
 
 const adminData = {

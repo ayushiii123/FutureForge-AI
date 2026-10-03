@@ -10,7 +10,9 @@ const getProductImageUrl = (image, name = "Product") => {
   }
 
   const normalized = value.replace(/\\/g, "/");
-  const baseUrl = import.meta.env.VITE_API_URL || "https://futureforge-ai-server.onrender.com";
+  const baseUrl = import.meta.env.DEV
+  ? "http://127.0.0.1:5000"
+  : (import.meta.env.VITE_API_URL || "https://futureforge-ai-server.onrender.com");
 
   if (normalized.startsWith("/")) {
     return `${baseUrl}${normalized}`;

@@ -22,9 +22,10 @@ export const updateOrderStatus = async (id, status) => {
 };
 
 // Create Razorpay Order
-export const createPayment = async (amount) => {
+// Create Razorpay Order
+export const createPayment = async (items) => {
   const res = await api.post("/payment/create-order", {
-    amount,
+    items,
   });
 
   return res.data;
@@ -42,5 +43,19 @@ export const createPayment = async (amount) => {
 // Place Order
 export const placeOrder = async (orderData) => {
   const res = await api.post("/orders", orderData);
+  return res.data;
+};
+// Cancel Order
+export const cancelOrder = async (id) => {
+  const res = await api.put(`/orders/${id}/cancel`);
+  return res.data;
+};
+// Verify Razorpay Payment
+export const verifyRazorpayPayment = async (paymentData) => {
+  const res = await api.post(
+    "/payment/verify-payment",
+    paymentData
+  );
+
   return res.data;
 };

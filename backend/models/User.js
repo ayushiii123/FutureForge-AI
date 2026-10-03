@@ -39,9 +39,20 @@ const userSchema = new mongoose.Schema(
       default: "",
     },
 
+    // Email OTP Verification
     isVerified: {
       type: Boolean,
       default: false,
+    },
+
+    otp: {
+      type: String,
+      default: "",
+    },
+
+    otpExpiresAt: {
+      type: Date,
+      default: null,
     },
 
     // Wishlist

@@ -2,17 +2,21 @@ import { useState } from "react";
 import { addProduct } from "../../services/productService";
 
 const ProductForm = () => {
-  const [form, setForm] = useState({
-    name: "",
-    brand: "",
-    category: "",
-    condition: "new",
-    description: "",
-    price: "",
-    originalPrice: "",
-    stock: "",
-    image: "",
-  });
+ const [form, setForm] = useState({
+  name: "",
+  brand: "",
+  category: "",
+  condition: "new",
+  refurbishmentGrade: "",
+  warrantyMonths: "0",
+  inspectionStatus: "Not Inspected",
+  inspectionNotes: "",
+  description: "",
+  price: "",
+  originalPrice: "",
+  stock: "",
+  image: "",
+});
 
   const handleChange = (e) => {
     setForm({
@@ -54,6 +58,10 @@ const handleSubmit = async (e) => {
       originalPrice: "",
       stock: "",
       image: "",
+      refurbishmentGrade: "",
+warrantyMonths: "0",
+inspectionStatus: "Not Inspected",
+inspectionNotes: "",
     });
 
     setImage(null);
@@ -104,7 +112,66 @@ const handleSubmit = async (e) => {
         <option value="new">New</option>
         <option value="refurbished">Refurbished</option>
       </select>
+{/* Warranty */}
+<input
+  name="warrantyMonths"
+  type="number"
+  min="0"
+  value={form.warrantyMonths}
+  onChange={handleChange}
+  placeholder="Warranty (months)"
+  className="w-full border p-3 rounded-lg"
+/>
 
+{/* Refurbished Product Inspection */}
+{form.condition === "refurbished" && (
+  <div className="space-y-4 rounded-xl border border-violet-200 bg-violet-50 p-4">
+    <h3 className="text-lg font-bold text-violet-800">
+      Refurbishment & Inspection
+    </h3>
+
+    <label className="block text-sm font-semibold text-slate-700">
+      Refurbishment Grade
+      <select
+        name="refurbishmentGrade"
+        value={form.refurbishmentGrade}
+        onChange={handleChange}
+        className="mt-2 w-full border p-3 rounded-lg bg-white"
+      >
+        <option value="">Select Grade</option>
+        <option value="A">Grade A - Excellent</option>
+        <option value="B">Grade B - Good</option>
+        <option value="C">Grade C - Fair</option>
+      </select>
+    </label>
+
+    <label className="block text-sm font-semibold text-slate-700">
+      Inspection Status
+      <select
+        name="inspectionStatus"
+        value={form.inspectionStatus}
+        onChange={handleChange}
+        className="mt-2 w-full border p-3 rounded-lg bg-white"
+      >
+        <option value="Not Inspected">Not Inspected</option>
+        <option value="Passed">Passed</option>
+        <option value="Needs Review">Needs Review</option>
+      </select>
+    </label>
+
+    <label className="block text-sm font-semibold text-slate-700">
+      Inspection Notes
+      <textarea
+        name="inspectionNotes"
+        value={form.inspectionNotes}
+        onChange={handleChange}
+        placeholder="Enter actual inspection observations..."
+        rows={3}
+        className="mt-2 w-full border p-3 rounded-lg bg-white"
+      />
+    </label>
+  </div>
+)}
       <textarea
         name="description"
         value={form.description}

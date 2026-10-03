@@ -15,7 +15,11 @@ import authMiddleware from "../middleware/authMiddleware.js";
 const router = express.Router();
 
 /// Get All Products
-router.get("/", getProducts);
+// Get All Products
+router.get("/", (req, res, next) => {
+  console.log("PRODUCT ROUTE HIT:", req.query);
+  return getProducts(req, res, next);
+});
 
 // Get Single Product
 router.get("/:id", getSingleProduct);

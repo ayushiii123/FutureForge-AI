@@ -25,9 +25,12 @@ const NewArrivals = ({ limit = 8 }) => {
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-        {products.map((product) => (
-          <ProductCard key={product._id} product={product} />
-        ))}
+       {products.map((product, index) => (
+  <ProductCard
+    key={`${product?._id || product?.id || product?.name || "product"}-${index}`}
+    product={product}
+  />
+))}
       </div>
     </section>
   );

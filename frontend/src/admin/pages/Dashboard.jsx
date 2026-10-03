@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getDashboardStats } from "../../services/dashboardService";
+import { getDashboardStats ,getSalesReport} from "../../services/dashboardService";
 import {
   LineChart,
   Line,
@@ -10,7 +10,8 @@ import {
   ResponsiveContainer,
   Legend,
   PieChart,
-  Pie
+  Pie,
+  Cell,
 } from "recharts";
 const COLORS = [
   "#facc15",
@@ -29,7 +30,27 @@ const Dashboard = () => {
   useEffect(() => {
     loadStats();
   }, []);
+const toDateInputValue = (date) => {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
 
+  return `${year}-${month}-${day}`;
+};
+
+const today = new Date();
+const weekAgo = new Date();
+weekAgo.setDate(weekAgo.getDate() - 6);
+
+const [reportFrom, setReportFrom] = useState(
+  () => toDateInputValue(weekAgo)
+);
+const [reportTo, setReportTo] = useState(
+  () => toDateInputValue(today)
+);
+const [salesReport, setSalesReport] = useState(null);
+const [reportLoading, setReportLoading] = useState(false);
+const [reportError, setReportError] = useState("");
   const loadStats = async () => {
     try {
       const data = await getDashboardStats();
@@ -38,7 +59,33 @@ const Dashboard = () => {
       console.log(error);
     }
   };
+const handleGenerateReport = async () => {
+  if (!reportFrom || !reportTo) {
+    setReportError("Please select both dates.");
+    return;
+  }
 
+  if (reportFrom > reportTo) {
+    setReportError("From date cannot be after To date.");
+    return;
+  }
+
+  try {
+    setReportLoading(true);
+    setReportError("");
+
+    const data = await getSalesReport(reportFrom, reportTo);
+    setSalesReport(data);
+  } catch (error) {
+    setSalesReport(null);
+    setReportError(
+      error.response?.data?.message ||
+        "Failed to generate sales report."
+    );
+  } finally {
+    setReportLoading(false);
+  }
+};
   return (
     <div>
 
@@ -90,6 +137,132 @@ const Dashboard = () => {
         </div>
 
       </div>
+
+{/* DATE-WISE SALES REPORT */}
+<div className="bg-white rounded-xl shadow mt-8 p-6">
+  <h2 className="text-2xl font-bold mb-2">
+    Date-wise Sales Report
+  </h2>
+
+  <p className="text-sm text-gray-500 mb-6">
+    Select a date range to view delivered orders and revenue.
+  </p>
+
+  <div className="grid grid-cols-1 md:grid-cols-3 gap-4 items-end">
+    <div>
+      <label
+        htmlFor="reportFrom"
+        className="block text-sm font-semibold text-slate-700 mb-2"
+      >
+        From Date
+      </label>
+      <input
+        id="reportFrom"
+        type="date"
+        value={reportFrom}
+        max={reportTo}
+        onChange={(e) => setReportFrom(e.target.value)}
+        className="w-full border border-slate-300 rounded-lg p-3 focus:border-violet-500 focus:outline-none"
+      />
+    </div>
+
+    <div>
+      <label
+        htmlFor="reportTo"
+        className="block text-sm font-semibold text-slate-700 mb-2"
+      >
+        To Date
+      </label>
+      <input
+        id="reportTo"
+        type="date"
+        value={reportTo}
+        min={reportFrom}
+        onChange={(e) => setReportTo(e.target.value)}
+        className="w-full border border-slate-300 rounded-lg p-3 focus:border-violet-500 focus:outline-none"
+      />
+    </div>
+
+    <button
+      type="button"
+      onClick={handleGenerateReport}
+      disabled={reportLoading}
+      className="w-full rounded-lg bg-[#5b3df5] px-5 py-3 font-semibold text-white hover:bg-violet-700 disabled:opacity-50 transition"
+    >
+      {reportLoading ? "Generating..." : "Generate Report"}
+    </button>
+  </div>
+
+  {reportError && (
+    <div
+      role="alert"
+      className="mt-4 rounded-lg border border-red-200 bg-red-50 p-3 text-sm text-red-700"
+    >
+      {reportError}
+    </div>
+  )}
+
+  {salesReport && (
+    <div className="mt-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-8">
+        <div className="rounded-xl border border-green-200 bg-green-50 p-5">
+          <p className="text-sm font-medium text-green-700">
+            Total Revenue
+          </p>
+          <h3 className="mt-2 text-3xl font-bold text-green-800">
+            ₹{Number(salesReport.totalRevenue || 0).toLocaleString("en-IN")}
+          </h3>
+        </div>
+
+        <div className="rounded-xl border border-violet-200 bg-violet-50 p-5">
+          <p className="text-sm font-medium text-violet-700">
+            Delivered Orders
+          </p>
+          <h3 className="mt-2 text-3xl font-bold text-violet-800">
+            {salesReport.totalOrders || 0}
+          </h3>
+        </div>
+      </div>
+
+      <h3 className="text-xl font-bold mb-4">
+        Daily Sales Breakdown
+      </h3>
+
+      {salesReport.dailySales?.length > 0 ? (
+        <div className="overflow-x-auto">
+          <table className="w-full min-w-[480px] text-sm">
+            <thead className="bg-slate-100">
+              <tr>
+                <th className="p-3 text-left">Date</th>
+                <th className="p-3 text-center">Delivered Orders</th>
+                <th className="p-3 text-right">Revenue</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              {salesReport.dailySales.map((day) => (
+                <tr
+                  key={day._id}
+                  className="border-b hover:bg-violet-50"
+                >
+                  <td className="p-3">{day._id}</td>
+                  <td className="p-3 text-center">{day.orders}</td>
+                  <td className="p-3 text-right font-semibold text-green-700">
+                    ₹{Number(day.revenue || 0).toLocaleString("en-IN")}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      ) : (
+        <div className="rounded-xl border border-dashed border-slate-300 bg-slate-50 p-8 text-center text-slate-500">
+          No delivered sales found for this date range.
+        </div>
+      )}
+    </div>
+  )}
+</div>
       <div className="bg-white rounded-xl shadow mt-8 p-6">
 
   <h2 className="text-2xl font-bold mb-5">

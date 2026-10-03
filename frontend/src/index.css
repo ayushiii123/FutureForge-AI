@@ -1,1 +1,109 @@
 @import "tailwindcss";
+
+
+/* Global page */
+html,
+body,
+#root {
+  min-height: 100%;
+}
+
+body {
+  margin: 0;
+  transition:
+    background-color 0.25s ease,
+    color 0.25s ease;
+}
+
+/* =========================
+   TECHREVIVE DARK MODE
+   ========================= */
+
+body.dark-mode {
+  background: #0f172a;
+  color: #e5e7eb;
+}
+
+/* Main white surfaces */
+body.dark-mode .bg-white {
+  background-color: #111827 !important;
+}
+
+/* Light slate page backgrounds */
+body.dark-mode .bg-slate-50 {
+  background-color: #0f172a !important;
+}
+
+body.dark-mode .bg-gray-50 {
+  background-color: #0f172a !important;
+}
+
+/* Violet light backgrounds */
+body.dark-mode .bg-violet-50 {
+  background-color: #1e1b4b !important;
+}
+
+body.dark-mode .bg-violet-100 {
+  background-color: #312e81 !important;
+}
+
+/* Text */
+body.dark-mode .text-slate-900,
+body.dark-mode .text-slate-800 {
+  color: #f8fafc !important;
+}
+
+body.dark-mode .text-slate-700 {
+  color: #e2e8f0 !important;
+}
+
+body.dark-mode .text-gray-600,
+body.dark-mode .text-gray-500 {
+  color: #94a3b8 !important;
+}
+
+/* Borders */
+body.dark-mode .border-gray-200,
+body.dark-mode .border-gray-300,
+body.dark-mode .border-violet-100,
+body.dark-mode .border-violet-200 {
+  border-color: #334155 !important;
+}
+
+/* Inputs / selects */
+body.dark-mode input,
+body.dark-mode select,
+body.dark-mode textarea {
+  background-color: #1e293b !important;
+  color: #f8fafc !important;
+  border-color: #475569 !important;
+}
+
+body.dark-mode input::placeholder,
+body.dark-mode textarea::placeholder {
+  color: #94a3b8 !important;
+}
+
+/* Search / dropdown */
+body.dark-mode .shadow-xl,
+body.dark-mode .shadow-lg,
+body.dark-mode .shadow-md,
+body.dark-mode .shadow-sm {
+  --tw-shadow-color: rgba(0, 0, 0, 0.45);
+}
+
+/* Mobile / desktop menu hover */
+body.dark-mode .hover\:bg-violet-50:hover {
+  background-color: #312e81 !important;
+}
+
+/* Links */
+body.dark-mode a {
+  color: inherit;
+}
+
+/* Buttons with white backgrounds */
+body.dark-mode button.bg-white {
+  background-color: #111827 !important;
+  color: #f8fafc !important;
+}

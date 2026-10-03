@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import { FaRobot, FaPaperPlane, FaTimes } from "react-icons/fa";
 import { motion, AnimatePresence } from "framer-motion";
-import axios from "axios";
+import api from "../services/api";
 
 const ChatBot = () => {
   const [open, setOpen] = useState(false);
@@ -44,21 +44,15 @@ const ChatBot = () => {
   setLoading(true);
 
   try {
-    const token = localStorage.getItem("token");
-
-    const res = await axios.post(
-      "https://futureforge-ai-server.onrender.com",
-      {
-        message: text,
-      },
-      {
-        headers: token
-          ? {
-              Authorization: `Bearer ${token}`,
-            }
-          : {},
-      }
-    );
+    const res = await api.post(
+  "/chat",
+  {
+    message: text,
+  },
+  {
+    timeout: 45000,
+  }
+);
 
     setMessages((prev) => [
       ...prev,
@@ -169,7 +163,15 @@ const ChatBot = () => {
         className="border rounded-lg p-2 bg-white shadow"
       >
         <img
-          src={`https://futureforge-ai-server.onrender.com/uploads/${item.image}`}
+        src={
+  item.image?.startsWith("http")
+    ? item.image
+    : `http://localhost:5000${
+        item.image?.startsWith("/uploads")
+          ? item.image
+          : `/uploads/${item.image || ""}`
+      }`
+}
           alt={item.name}
           className="w-full h-28 object-cover rounded"
         />

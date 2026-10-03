@@ -7,7 +7,7 @@ import Footer from "../../components/layout/Footer";
 import PromoBanner from "../../components/home/PromoBanner";
 import Testimonial from "../../components/home/Testimonial";
 import Newsletter from "../../components/home/Newsletter";
-
+import ForYou from "../../components/home/ForYou";
 
 
 const Home = () => {
@@ -21,7 +21,8 @@ const Home = () => {
       <PromoBanner />
       <Testimonial />
       <Newsletter />
-      
+      <ForYou />
+
 <Footer />
     </>
   );

@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { FaHeart } from "react-icons/fa";
 import { addToWishlist } from "../../services/wishlistService";
 import getProductImageUrl from "../../utils/imageUrl";
-
+import { addToCompare } from "../../services/compareService";
 const ProductCard = ({ product }) => {
   const imageSource = product?.image || product?.img || "";
   const handleWishlist = async () => {
@@ -13,6 +13,10 @@ const ProductCard = ({ product }) => {
       alert(error.response?.data?.message || "Please Login First");
     }
   };
+  const handleCompare = () => {
+  const result = addToCompare(product);
+  alert(result.message);
+};
 
   const img = getProductImageUrl(imageSource, product?.name || "Product");
 
@@ -56,6 +60,27 @@ const ProductCard = ({ product }) => {
         <p className="text-gray-500 text-sm">
           {product?.brand || "TechRevive"}
         </p>
+        {product?.condition === "refurbished" && (
+  <div className="flex flex-wrap gap-2 mt-2">
+    {product.refurbishmentGrade && (
+      <span className="rounded-full bg-violet-100 px-3 py-1 text-xs font-semibold text-violet-700">
+        Grade {product.refurbishmentGrade}
+      </span>
+    )}
+
+    {Number(product.warrantyMonths) > 0 && (
+      <span className="rounded-full bg-green-100 px-3 py-1 text-xs font-semibold text-green-700">
+        {product.warrantyMonths}-Month Warranty
+      </span>
+    )}
+
+    {product.inspectionStatus === "Passed" && (
+      <span className="rounded-full bg-blue-100 px-3 py-1 text-xs font-semibold text-blue-700">
+        Inspected
+      </span>
+    )}
+  </div>
+)}
 
         {product?.description && (
           <p className="text-sm text-gray-600 mt-2 line-clamp-2">
@@ -69,7 +94,12 @@ const ProductCard = ({ product }) => {
             <span className="text-sm text-gray-400 line-through">₹{product.originalPrice}</span>
           )}
         </div>
-
+<button
+  onClick={handleCompare}
+  className="mt-4 w-full border-2 border-violet-500 text-violet-700 font-semibold py-2 rounded-lg hover:bg-violet-50 transition"
+>
+  + Compare
+</button>
         <Link
           to={`/product/${product?._id || ""}`}
           className="mt-4 block bg-[#5b3df5] text-white text-center py-2 rounded-lg hover:bg-violet-700 transition"

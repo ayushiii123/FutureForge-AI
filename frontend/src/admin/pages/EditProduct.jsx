@@ -38,7 +38,7 @@ const EditProduct = () => {
           description: product.description || "",
           price: product.price || "",
           originalPrice: product.originalPrice || "",
-          stock: product.stock || "",
+          stock: product.stock ?? "",
         });
 
         setPreview(product.image || "");
@@ -168,15 +168,47 @@ const EditProduct = () => {
           className="w-full border p-3 rounded-lg"
         />
 
-        <input
-          type="number"
-          name="stock"
-          value={form.stock}
-          onChange={handleChange}
-          placeholder="Stock"
-          className="w-full border p-3 rounded-lg"
-          required
-        />
+       <div className="space-y-2">
+  <label
+    htmlFor="stock"
+    className="block font-semibold text-slate-700"
+  >
+    Inventory Stock
+  </label>
+
+  <input
+    id="stock"
+    type="number"
+    name="stock"
+    min="0"
+    step="1"
+    value={form.stock}
+    onChange={handleChange}
+    placeholder="Available quantity"
+    className="w-full border p-3 rounded-lg focus:border-indigo-500 focus:outline-none"
+    required
+  />
+
+  {form.stock !== "" &&
+    Number.isInteger(Number(form.stock)) &&
+    Number(form.stock) >= 0 && (
+      <p
+        className={`text-sm font-semibold ${
+          Number(form.stock) === 0
+            ? "text-red-700"
+            : Number(form.stock) <= 5
+              ? "text-amber-600"
+              : "text-green-600"
+        }`}
+      >
+        {Number(form.stock) === 0
+          ? "Out of Stock"
+          : Number(form.stock) <= 5
+            ? `Low Stock Alert: Only ${form.stock} units left`
+            : `${form.stock} units available`}
+      </p>
+    )}
+</div>
 
         <input
           type="file"

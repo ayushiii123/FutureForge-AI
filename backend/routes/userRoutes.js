@@ -5,6 +5,7 @@ import upload from "../middleware/upload.js";
 import {
   getProfile,
   updateProfile,
+   updateAddress,
 } from "../controllers/userController.js";
 
 const router = express.Router();
@@ -20,6 +21,11 @@ router.put(
   authMiddleware,
   upload.single("profileImage"),
   updateProfile
+);
+router.put(
+  "/address",
+  authMiddleware,
+  updateAddress
 );
 
 export default router;

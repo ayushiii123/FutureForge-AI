@@ -4,6 +4,7 @@ import authMiddleware from "../middleware/authMiddleware.js";
 
 import {
   getDashboardStats,
+  getSalesReport,
 } from "../controllers/dashboardController.js";
 
 const router = express.Router();
@@ -13,6 +14,13 @@ router.get(
   authMiddleware,
   adminMiddleware,
   getDashboardStats
+);
+
+router.get(
+  "/sales-report",
+  authMiddleware,
+  adminMiddleware,
+  getSalesReport
 );
 
 export default router;

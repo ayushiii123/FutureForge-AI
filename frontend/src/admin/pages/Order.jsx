@@ -84,37 +84,28 @@ const Orders = () => {
 
               <td>
 
-                <select
-                  value={order.orderStatus}
-                  onChange={(e) =>
-                    changeStatus(
-                      order._id,
-                      e.target.value
-                    )
-                  }
-                >
-
-                  <option>
-                    Pending
-                  </option>
-
-                  <option>
-                    Confirmed
-                  </option>
-
-                  <option>
-                    Shipped
-                  </option>
-
-                  <option>
-                    Delivered
-                  </option>
-
-                  <option>
-                    Cancelled
-                  </option>
-
-                </select>
+              <select
+  value={order.orderStatus}
+  disabled={["Delivered", "Cancelled"].includes(order.orderStatus)}
+  onChange={(e) =>
+    changeStatus(order._id, e.target.value)
+  }
+  className="rounded-lg border border-gray-300 px-3 py-2 disabled:bg-gray-100 disabled:text-gray-500 disabled:cursor-not-allowed"
+>
+  {(
+    {
+      Pending: ["Pending", "Confirmed", "Cancelled"],
+      Confirmed: ["Confirmed", "Shipped", "Cancelled"],
+      Shipped: ["Shipped", "Delivered"],
+      Delivered: ["Delivered"],
+      Cancelled: ["Cancelled"],
+    }[order.orderStatus] || [order.orderStatus]
+  ).map((status) => (
+    <option key={status} value={status}>
+      {status}
+    </option>
+  ))}
+</select>
 
               </td>
 

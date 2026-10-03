@@ -1,12 +1,8 @@
 import express from "express";
+import { chatWithAI } from "../controllers/aiController.js";
 
 const router = express.Router();
 
-router.post("/", (req, res) => {
-  res.json({
-    success: true,
-    message: "Chat Route Working Successfully"
-  });
-});
+router.post("/", chatWithAI);
 
 export default router;

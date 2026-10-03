@@ -238,6 +238,162 @@ const legacyFallbackImageValues = new Set([
   "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=500",
   "https://images.unsplash.com/photo-1510127034890-ba27508e9f1c?w=500",
 ]);
+const exactProductImages = {
+  "iPhone 11 Pro":
+    "https://www.apple.com/newsroom/images/product/iphone/lifestyle/Apple_iPhone-11-Pro_Most-Powerful-Advanced_091019_big.jpg.large.jpg",
+
+  "iPhone 18 Pro":
+    "/uploads/products/iphone-18-pro.jpg",
+    "iPhone 14 Pro":
+  "/uploads/products/iphone-14-pro.jpg",
+  "iPhone 15 Pro":
+  "/uploads/products/iphone-15-pro.jpg",
+  "iPhone 15 Pro Max":
+  "/uploads/products/iphone-15-pro-max.jpg",
+  "iPhone 12":
+  "/uploads/products/iphone-12.jpg",
+  "Vivo Y300":
+  "/uploads/products/vivo-y300.jpg",
+  "Vivo Y300":
+  "/uploads/products/vivo-y300.jpg",
+
+"Vivo T2 Pro":
+  "/uploads/products/vivo-t2-pro.jpg",
+
+"Vivo T2":
+  "/uploads/products/vivo-t2.jpg",
+
+"Vivo T3":
+  "/uploads/products/vivo-t3.jpg",
+
+"Vivo T3x":
+  "/uploads/products/vivo-t3x.jpg",
+
+"Vivo V25":
+  "/uploads/products/vivo-v25.jpg",
+
+"Vivo V27":
+  "/uploads/products/vivo-v27.jpg",
+
+"Vivo V29 Pro":
+  "/uploads/products/vivo-v29-pro.jpg",
+
+"Vivo V29":
+  "/uploads/products/vivo-v29.jpg",
+
+"Vivo V30":
+  "/uploads/products/vivo-v30.jpg",
+
+"Vivo V40":
+  "/uploads/products/vivo-v40.jpg",
+
+"Vivo Y100":
+  "/uploads/products/vivo-y100.jpg",
+
+"Vivo Y27":
+  "/uploads/products/vivo-y27.jpg",
+
+"Vivo Y200":
+  "/uploads/products/vivo-y200.jpg",
+  "Vivo Y200e":
+  "/uploads/products/vivo-y200e.jpg",
+
+"Vivo Y200 Pro":
+  "/uploads/products/vivo-y200-pro.png",
+  "OnePlus 10T":
+  "/uploads/products/oneplus-10t.webp",
+
+"OnePlus Nord 2T":
+  "/uploads/products/oneplus-nord-2t.webp",
+
+"OnePlus 11R":
+  "/uploads/products/oneplus-11r.webp",
+
+"OnePlus 8T":
+  "/uploads/products/oneplus-8t.webp",
+
+"OnePlus 9 Pro":
+  "/uploads/products/oneplus-9-pro.webp",
+
+"OnePlus Nord CE 3 Lite":
+  "/uploads/products/oneplus-nord-ce-3-lite.webp",
+
+"OnePlus Nord CE 3":
+  "/uploads/products/oneplus-nord-ce-3.webp",
+
+"OnePlus Nord 3":
+  "/uploads/products/oneplus-nord-3.webp",
+
+"OnePlus 10 Pro":
+  "/uploads/products/oneplus-10-pro.webp",
+
+"OnePlus 11":
+  "/uploads/products/oneplus-11.webp",
+
+"OnePlus Buds 3":
+  "/uploads/products/oneplus-buds-3.webp",
+
+"OnePlus Nord 4":
+  "/uploads/products/oneplus-nord-4.webp",
+
+"OnePlus Nord CE 4":
+  "/uploads/products/oneplus-nord-ce-4.webp",
+
+"OnePlus 12R":
+  "/uploads/products/oneplus-12r.webp",
+
+"OnePlus 12":
+  "/uploads/products/oneplus-12.webp",
+  "Dell Inspiron 15":
+  "/uploads/products/dell-inspiron-15.png",
+
+"Lenovo IdeaPad Slim 5":
+  "/uploads/products/lenovo-ideapad-slim-5.avif",
+
+"HP Pavilion 14":
+  "/uploads/products/hp-pavilion-14.avif",
+
+"ASUS Zenbook 14":
+  "/uploads/products/asus-zenbook-14.avif",
+
+"MacBook Air M2":
+  "/uploads/products/macbook-air-m2.jpg",
+
+"Dell XPS 13":
+  "/uploads/products/dell-xps-13.jpg",
+  "Samsung Galaxy Tab S9 FE":
+  "/uploads/products/samsung-galaxy-tab-s9-fe.avif",
+
+"Samsung Galaxy Tab S9":
+  "/uploads/products/samsung-galaxy-tab-s9.avif",
+  "Garmin Forerunner 255":
+  "/uploads/products/garmin-forerunner-255.jpg",
+
+"Apple Watch Series 9":
+  "/uploads/products/apple-watch-series-9.jpg",
+
+"Nikon Z50":
+  "/uploads/products/nikon-z50.jpg",
+
+"Canon EOS R10":
+  "/uploads/products/canon-eos-r10.jpg",
+
+"Bose QuietComfort Earbuds":
+  "/uploads/products/bose-quietcomfort-earbuds.jpg",
+
+"Sony WH-1000XM5":
+  "/uploads/products/sony-wh-1000xm5.jpg",
+};
+const curatedProductImages = {
+  Apple: [
+    "https://images.unsplash.com/photo-1496248051939-0382a018e59a?auto=format&fit=crop&w=1200&q=80",
+    "https://images.unsplash.com/photo-1744487347462-db8ad9f942a3?auto=format&fit=crop&w=1200&q=80",
+    "https://images.unsplash.com/photo-1602476807282-c315d616b46c?auto=format&fit=crop&w=1200&q=80",
+    "https://images.unsplash.com/photo-1569144157590-5d41c725e9bd?auto=format&fit=crop&w=1200&q=80",
+    "https://images.unsplash.com/photo-1587310285959-d768493970b6?auto=format&fit=crop&w=1200&q=80",
+    "https://images.unsplash.com/photo-1693657652720-ab97ca98dd0c?auto=format&fit=crop&w=1200&q=80",
+  ],
+};
 
 const nameImageMap = [
   { keywords: ["iphone 14", "iphone 15", "iphone 13", "iphone"], image: "https://images.unsplash.com/photo-1592750475338-74b7b21085ab?w=1200&auto=format&fit=crop" },
@@ -249,15 +405,44 @@ const nameImageMap = [
   { keywords: ["canon", "nikon", "camera", "sony alpha", "eos", "mirrorless"], image: "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?w=1200&auto=format&fit=crop" },
 ];
 
-const getNameBasedFallbackImage = (name = "", category = "") => {
-  const normalizedName = String(name || "").toLowerCase();
-  const matchedNameImage = nameImageMap.find((entry) => entry.keywords.some((keyword) => normalizedName.includes(keyword)));
-  if (matchedNameImage) return matchedNameImage.image;
+const getNameBasedFallbackImage = (name = "", category = "", brand = "") => {
+  const normalizedName = String(name || "").trim().toLowerCase();
+  const normalizedBrand = String(brand || "").trim().toLowerCase();
+  const normalizedCategory = String(category || "accessories")
+    .trim()
+    .toLowerCase();
 
-  const safeCategory = category?.trim() || "Accessories";
-  const images = fallbackImageByCategory[safeCategory] || fallbackImageByCategory.Accessories;
-  const index = (normalizedName ? normalizedName.charCodeAt(0) : safeCategory.length) % images.length;
-  return images[index];
+  let hash = 0;
+
+  const key = `${normalizedBrand}-${normalizedName}`;
+
+  for (let i = 0; i < key.length; i++) {
+    hash = (hash * 31 + key.charCodeAt(i)) >>> 0;
+  }
+
+  const lock = hash || 1;
+
+  let searchTerm = normalizedCategory;
+
+  if (normalizedCategory === "smartphones") {
+    searchTerm = `${normalizedBrand} smartphone`;
+  } else if (normalizedCategory === "laptops") {
+    searchTerm = `${normalizedBrand} laptop`;
+  } else if (normalizedCategory === "tablets") {
+    searchTerm = `${normalizedBrand} tablet`;
+  } else if (normalizedCategory === "headphones") {
+    searchTerm = `${normalizedBrand} headphones`;
+  } else if (normalizedCategory === "smart watches") {
+    searchTerm = `${normalizedBrand} smartwatch`;
+  } else if (normalizedCategory === "cameras") {
+    searchTerm = `${normalizedBrand} camera`;
+  } else {
+    searchTerm = `${normalizedBrand} gadget`;
+  }
+
+  return `https://loremflickr.com/800/600/${encodeURIComponent(
+    searchTerm
+  )}?lock=${lock}`;
 };
 
 const isLegacyFallbackImage = (value) => {
@@ -265,52 +450,181 @@ const isLegacyFallbackImage = (value) => {
   return Boolean(normalized && legacyFallbackImageValues.has(normalized));
 };
 
-export const resolveProductImage = (file, providedImage, name = "", category = "") => {
+export const resolveProductImage = (
+  file,
+  providedImage,
+  name = "",
+  category = "",
+  brand = ""
+) => {
   const uploadedImage = normalizeImagePath(file);
-  if (uploadedImage) return uploadedImage;
 
+  if (uploadedImage) {
+    return uploadedImage;
+  }
+
+
+const normalizedProductName = String(name || "")
+  .replace(/\u200B/g, "")
+  .replace(/\s+/g, " ")
+  .trim()
+  .toLowerCase();
+console.log(
+  "ONEPLUS KEYS:",
+  Object.keys(exactProductImages).filter((key) =>
+    key.toLowerCase().includes("oneplus")
+  )
+);
+const onePlusExactImages = {
+  "oneplus 10t": "/uploads/products/oneplus-10t.webp",
+  "oneplus nord 2t": "/uploads/products/oneplus-nord-2t.webp",
+  "oneplus 11r": "/uploads/products/oneplus-11r.webp",
+  "oneplus 8t": "/uploads/products/oneplus-8t.webp",
+  "oneplus 9 pro": "/uploads/products/oneplus-9-pro.webp",
+  "oneplus nord ce 3 lite": "/uploads/products/oneplus-nord-ce-3-lite.webp",
+  "oneplus nord ce 3": "/uploads/products/oneplus-nord-ce-3.webp",
+  "oneplus nord 3": "/uploads/products/oneplus-nord-3.webp",
+  "oneplus 10 pro": "/uploads/products/oneplus-10-pro.webp",
+  "oneplus 11": "/uploads/products/oneplus-11.webp",
+  "oneplus buds 3": "/uploads/products/oneplus-buds-3.webp",
+  "oneplus nord 4": "/uploads/products/oneplus-nord-4.webp",
+  "oneplus nord ce 4": "/uploads/products/oneplus-nord-ce-4.webp",
+  "oneplus 12r": "/uploads/products/oneplus-12r.webp",
+  "oneplus 12": "/uploads/products/oneplus-12.webp",
+  "oneplus buds 3": "/uploads/products/oneplus-buds-3.jpg",
+};
+const accessoryExactImages = {
+  "garmin forerunner 255":
+    "/uploads/products/garmin-forerunner-255.jpg",
+
+  "apple watch series 9":
+    "/uploads/products/apple-watch-series-9.jpg",
+
+  "nikon z50":
+    "/uploads/products/nikon-z50.jpg",
+
+  "canon eos r10":
+    "/uploads/products/canon-eos-r10.jpg",
+
+  "oneplus buds 3":
+    "/uploads/products/oneplus-buds-3.jpg",
+
+  "bose quietcomfort earbuds":
+    "/uploads/products/bose-quietcomfort-earbuds.jpg",
+
+  "sony wh-1000xm5":
+    "/uploads/products/sony-wh-1000xm5.jpg",
+};
+console.log("ACCESSORY DEBUG:", {
+  name,
+  normalizedProductName,
+  mappedImage: accessoryExactImages[normalizedProductName],
+});
+if (accessoryExactImages[normalizedProductName]) {
+  return accessoryExactImages[normalizedProductName];
+}
+
+
+const exactEntry = Object.entries(exactProductImages).find(
+  ([productName]) =>
+    productName
+      .replace(/\u200B/g, "")
+      .replace(/\s+/g, " ")
+      .trim()
+      .toLowerCase() === normalizedProductName
+);
+console.log("EXACT IMAGE DEBUG:", {
+  name,
+  normalizedProductName,
+  exactEntry,
+});
+
+if (exactEntry) {
+  return exactEntry[1];
+}
+  const normalizedBrand = String(brand || "").trim();
+
+  // Use curated product photos when available
+  const curatedImages = curatedProductImages[normalizedBrand];
+
+  if (curatedImages?.length) {
+    const key = `${normalizedBrand}-${name}-${category}`.toLowerCase();
+
+    let hash = 0;
+
+    for (let i = 0; i < key.length; i++) {
+      hash = (hash * 31 + key.charCodeAt(i)) >>> 0;
+    }
+
+    const index = hash % curatedImages.length;
+
+    return curatedImages[index];
+  }
+
+  // Existing image for products that don't have curated images yet
   if (typeof providedImage === "string") {
     const value = providedImage.trim();
-    if (value && !isLegacyFallbackImage(value)) {
-      if (/^https?:\/\//i.test(value) || /^data:/i.test(value)) return value;
+
+    if (value) {
+      if (/^https?:\/\//i.test(value) || /^data:/i.test(value)) {
+        return value;
+      }
+
       return normalizeImagePath(value);
     }
   }
 
-  return getNameBasedFallbackImage(name, category);
+  return getNameBasedFallbackImage(name, category, brand);
 };
-
 const normalizeProductDocument = async (product) => {
-  if (!product || typeof product !== "object") 
-    return {
-  ...(product.toObject ? product.toObject() : product),
-  image: resolvedImage,
-};
-const plainProduct = product.toObject ? product.toObject() : product;
-  const resolvedImage = resolveProductImage(null, product.image, product.name, product.category,
+  if (!product || typeof product !== "object") {
+    return product;
+  }
 
-    plainProduct.image,
-    plainProduct.name,
-    plainProduct.category
-  );
+  const plainProduct =
+    typeof product.toObject === "function"
+      ? product.toObject()
+      : product;
+
+  const resolvedImage = resolveProductImage(
+  null,
+  plainProduct.image,
+  plainProduct.name,
+  plainProduct.category,
+  plainProduct.brand
+);
+
   const shouldPersist = Boolean(
-    product._id &&
-    !String(product._id).startsWith("fallback-") &&
-    (!product.image || isLegacyFallbackImage(product.image)) &&
-    resolvedImage !== product.image
-
-  );
-
+  plainProduct._id &&
+  !String(plainProduct._id).startsWith("fallback-") &&
+  resolvedImage &&
+  resolvedImage !== plainProduct.image
+);
+console.log(
+  "IMAGE NORMALIZATION:",
+  plainProduct.name,
+  "OLD:",
+  plainProduct.image,
+  "NEW:",
+  resolvedImage
+);
   if (shouldPersist) {
     try {
-      await Product.findByIdAndUpdate(product._id, { image: resolvedImage }, { new: true });
+      await Product.findByIdAndUpdate(
+        plainProduct._id,
+        { image: resolvedImage },
+        { new: true }
+      );
     } catch (error) {
-      console.warn("Could not persist normalized product image:", error.message);
+      console.warn(
+        "Could not persist normalized product image:",
+        error.message
+      );
     }
   }
 
   return {
-    ...product,
+    ...plainProduct,
     image: resolvedImage,
   };
 };
@@ -348,7 +662,9 @@ export const addProduct = async (req, res) => {
 
 // Get All Products (Search + Filter + Sort)
 export const getProducts = async (req, res) => {
+
   try {
+    console.log("GET PRODUCTS CONTROLLER HIT:", req.query);
     const {
       keyword,
       category,

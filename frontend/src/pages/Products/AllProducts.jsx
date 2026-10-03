@@ -2,15 +2,19 @@ import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { getProducts } from "../../services/productService";
 import ProductCard from "../../components/products/ProductCard";
-
+import PromoBillboard from "../../components/common/PromoBillboard";
 const AllProducts = () => {
   const location = useLocation();
   const [products, setProducts] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [search, setSearch] = useState("");
   const [category, setCategory] = useState("All");
-
-  const categoryMap = {
+const [sortBy, setSortBy] = useState("featured");
+const [condition, setCondition] = useState("All");
+const [imageSearchResults, setImageSearchResults] = useState(null);
+const [imageSearchMessage, setImageSearchMessage] = useState("");
+const [imageSearchAnalysis, setImageSearchAnalysis] = useState(null);
+const categoryMap = {
     camera: "Cameras",
     cameras: "Cameras",
     cameraS: "Cameras",
@@ -40,7 +44,24 @@ const AllProducts = () => {
     setSearch(keyword);
     if (urlCategory) setCategory(urlCategory);
   }, [location.search]);
+useEffect(() => {
+  const state = location.state;
 
+  if (Array.isArray(state?.imageSearchResults)) {
+    setImageSearchResults(state.imageSearchResults);
+    setImageSearchMessage(state.imageSearchMessage || "");
+    setImageSearchAnalysis(state.imageSearchAnalysis || null);
+
+    setSearch("");
+    setCategory("All");
+    setCondition("All");
+    setSortBy("featured");
+  } else {
+    setImageSearchResults(null);
+    setImageSearchMessage("");
+    setImageSearchAnalysis(null);
+  }
+}, [location.key]);
   // If user typed a category name as keyword (e.g. "camera"), treat it as category filter
   useEffect(() => {
     if (!search) return;
@@ -57,26 +78,27 @@ const AllProducts = () => {
     }
   }, [search]);
 
-  useEffect(() => {
-    const loadProducts = async () => {
-      try {
-        const params = {
-          keyword: search || undefined,
-        };
-        if (category && category !== "All") params.category = category;
+ useEffect(() => {
+  const loadProducts = async () => {
+    try {
+      const params = {};
 
-        const data = await getProducts(params);
-        setProducts(data);
-      } catch (error) {
-        console.log(error);
+      if (category && category !== "All") {
+        params.category = category;
       }
-    };
 
-    loadProducts();
-  }, [search, category]);
+      const data = await getProducts(params);
+      setProducts(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  loadProducts();
+}, [category]);
 
   useEffect(() => {
-    let data = [...products];
+let data = [...(imageSearchResults ?? products)];
 
     if (search) {
       const query = search.toLowerCase();
@@ -97,23 +119,33 @@ const AllProducts = () => {
     if (category !== "All") {
       data = data.filter((item) => item.category?.toLowerCase() === category.toLowerCase());
     }
-
+    // Filter by product condition
+if (condition !== "All") {
+  data = data.filter(
+    (item) =>
+      item.condition?.toLowerCase() === condition.toLowerCase()
+  );
+}
+// Sort products
+if (sortBy === "price-low") {
+  data.sort((a, b) => a.price - b.price);
+} else if (sortBy === "price-high") {
+  data.sort((a, b) => b.price - a.price);
+} else if (sortBy === "newest") {
+  data.sort(
+    (a, b) =>
+      new Date(b.createdAt) - new Date(a.createdAt)
+  );
+}
     setFilteredProducts(data);
-  }, [search, category, products]);
+  }, [search, category, products, sortBy,condition,imageSearchResults,]);
 
-  return (
-    <div className="max-w-7xl mx-auto py-10 px-5">
-      <div className="rounded-3xl bg-gradient-to-r from-indigo-600 via-purple-600 to-fuchsia-500 p-8 text-white shadow-xl mb-8">
-        <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-4">
-          <div>
-            <p className="text-sm uppercase tracking-[0.3em] text-indigo-100">TechRevive</p>
-            <h1 className="text-3xl md:text-4xl font-bold mt-2">Discover premium devices</h1>
-            <p className="text-indigo-100 mt-3 max-w-2xl">
-              Browse curated refurbished and new gadgets with trusted quality and attractive pricing.
-            </p>
-          </div>
-        </div>
-      </div>
+
+   return (
+  <div className="max-w-7xl mx-auto py-10 px-5">
+    <PromoBillboard />
+
+    {/* Existing search, filters and product listing ka code yahan same rahega */}
 
       <div className="flex flex-col lg:flex-row gap-4 mb-8">
         <input
@@ -138,8 +170,86 @@ const AllProducts = () => {
           <option>Headphones</option>
           <option>Cameras</option>
         </select>
+        <select
+  value={sortBy}
+  onChange={(e) => setSortBy(e.target.value)}
+  className="border border-slate-200 p-3 rounded-xl w-full lg:w-64 shadow-sm focus:border-indigo-500 focus:outline-none"
+>
+  <option value="featured">Sort By: Featured</option>
+  <option value="price-low">Price: Low to High</option>
+  <option value="price-high">Price: High to Low</option>
+  <option value="newest">Newest First</option>
+</select>
+<select
+  value={condition}
+  onChange={(e) => setCondition(e.target.value)}
+  className="border border-slate-200 p-3 rounded-xl w-full lg:w-64 shadow-sm focus:border-indigo-500 focus:outline-none"
+>
+  <option value="All">All Conditions</option>
+  <option value="new">New</option>
+  <option value="refurbished">Refurbished</option>
+</select>
       </div>
 
+{imageSearchResults !== null && (
+  <div className="mb-6 rounded-2xl border border-violet-200 bg-gradient-to-r from-violet-50 to-fuchsia-50 p-5 shadow-sm">
+    <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+      <div>
+        <div className="flex items-center gap-2">
+          <span className="text-2xl">📸</span>
+          <h2 className="text-xl font-bold text-violet-800">
+            AI Image Search Results
+          </h2>
+        </div>
+
+        <p className="mt-2 text-sm text-slate-600">
+          {imageSearchMessage ||
+            `Found ${imageSearchResults.length} matching products.`}
+        </p>
+
+        {imageSearchAnalysis && (
+          <div className="mt-3 flex flex-wrap gap-2">
+            {[
+              imageSearchAnalysis.productType,
+              imageSearchAnalysis.brand,
+              imageSearchAnalysis.model,
+            ]
+              .filter(Boolean)
+              .map((item, index) => (
+                <span
+                  key={`${item}-${index}`}
+                  className="rounded-full border border-violet-200 bg-white px-3 py-1 text-xs font-medium text-violet-700"
+                >
+                  {item}
+                </span>
+              ))}
+          </div>
+        )}
+
+        <p className="mt-2 text-xs text-slate-500">
+          Results are based on AI-identified product details.
+          Matches may not be exact.
+        </p>
+      </div>
+
+      <button
+        type="button"
+        onClick={() => {
+          setImageSearchResults(null);
+          setImageSearchMessage("");
+          setImageSearchAnalysis(null);
+          setSearch("");
+          setCategory("All");
+          setCondition("All");
+          setSortBy("featured");
+        }}
+        className="shrink-0 rounded-xl border border-violet-300 bg-white px-5 py-3 text-sm font-semibold text-violet-700 transition hover:bg-violet-100"
+      >
+        Clear Image Search
+      </button>
+    </div>
+  </div>
+)}
       {filteredProducts.length === 0 ? (
         <div className="text-center py-20 rounded-2xl border border-dashed border-slate-300 bg-slate-50">
           <div className="text-5xl mb-3">🔎</div>

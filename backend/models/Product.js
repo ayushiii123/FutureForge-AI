@@ -25,7 +25,29 @@ const productSchema = new mongoose.Schema(
       enum: ["new", "refurbished"],
       required: true,
     },
+    refurbishmentGrade: {
+      type: String,
+      enum: ["", "A", "B", "C"],
+      default: "",
+    },
 
+    warrantyMonths: {
+      type: Number,
+      min: 0,
+      default: 0,
+    },
+
+    inspectionStatus: {
+      type: String,
+      enum: ["Not Inspected", "Passed", "Needs Review"],
+      default: "Not Inspected",
+    },
+
+    inspectionNotes: {
+      type: String,
+      trim: true,
+      default: "",
+    },
     description: {
       type: String,
       required: true,

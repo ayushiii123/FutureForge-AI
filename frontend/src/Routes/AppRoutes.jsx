@@ -8,6 +8,7 @@ import Login from "../pages/Auth/Login";
 import Register from "../pages/Auth/Register";
 import AllProducts from "../pages/Products/AllProducts";
 import ProductDetails from "../pages/Products/ProductDetails";
+import CompareProducts from "../pages/Products/CompareProducts";
 import Refurbished from "../pages/Products/Refurbished";
 import ExchangeDevice from "../pages/Exchange/ExchangeDevice";
 import SellDevice from "../pages/SellDevice/SellDevice";
@@ -29,9 +30,28 @@ const AppRoutes = () => {
     <Routes>
       <Route path="/" element={<Login />} />
       <Route path="/products" element={isLoggedIn ? <AllProducts /> : <Navigate to="/login" replace />} />
+      <Route
+  path="/compare"
+  element={
+    isLoggedIn ? (
+      <CompareProducts />
+    ) : (
+      <Navigate to="/login" replace />
+    )
+  }
+/>
       <Route path="/refurbished" element={isLoggedIn ? <Refurbished /> : <Navigate to="/login" replace />} />
       <Route path="/exchange" element={isLoggedIn ? <ExchangeDevice /> : <Navigate to="/login" replace />} />
-      <Route path="/sell-device" element={isLoggedIn ? <SellDevice /> : <Navigate to="/login" replace />} />
+      <Route
+  path="/sell-device"
+  element={
+    isLoggedIn ? (
+      <SellDevice />
+    ) : (
+      <Navigate to="/login" replace />
+    )
+  }
+/>
       <Route path="/product/:id" element={isLoggedIn ? <ProductDetails /> : <Navigate to="/login" replace />} />
       <Route path="/cart" element={isLoggedIn ? <Cart /> : <Navigate to="/login" replace />} />
 
